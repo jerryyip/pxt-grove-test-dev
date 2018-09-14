@@ -61,6 +61,19 @@ enum GroveGesture {
     Wave = 9
 }
 
+enum GroveJoystickPins {
+    //% block=P0
+    P0 = AnalogPin.P0,
+    //% block=P1
+    P1 = AnalogPin.P1,
+    //% block=P2
+    P2 = AnalogPin.P2,
+    //% block=P3
+    P3 = AnalogPin.P3,
+    //% block=P10
+    P10 = AnalogPin.P10
+}
+
 enum GroveJoystickKey {
     //% block=None
     None = 0,
@@ -129,8 +142,8 @@ namespace grove {
      * @param handler code to run
      */
     //% blockId=grove_joystick_create_event block="on Key|%key| at x pin|%xpin| and y pin|%ypin|"
-    //% xpin.min=P0 xpin.max=P4
-    //% ypin.min=P0 ypin.max=P4
+    //% xpin.min=0 xpin.max=4
+    //% ypin.min=0 ypin.max=4
     export function onJoystick(key: GroveJoystickKey, xpin: AnalogPin, ypin: AnalogPin, handler: () => void) {
         control.onEvent(joystickEventID, key, handler);
         control.inBackground(() => {
@@ -207,6 +220,7 @@ namespace grove {
      * @param dataPin value of data pin number
      */
     //% blockId=grove_tm1637_create block="4-Digit Display at|%clkPin|and|%dataPin"
+    //% advanced=true
     export function createDisplay(clkPin: DigitalPin, dataPin: DigitalPin): TM1637
     {
         let display = new TM1637();
@@ -527,7 +541,7 @@ namespace grove {
          * @param xPin
          * @param yPin
          */
-        //% blockId=grove_joystick_read block="read key of joystickon at x pin |%xPin and y pin |%yPin"
+        //% blockId=grove_joystick_read block="read key of joystickon at x pin|%xPin|and y pin|%yPin"
         //% advanced=true
         read(xPin: AnalogPin, yPin: AnalogPin): number {
             let xdata = 0, ydata = 0, result = 0;
