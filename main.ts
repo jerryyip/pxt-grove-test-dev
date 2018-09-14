@@ -63,15 +63,15 @@ enum GroveGesture {
 
 enum GroveJoystickPins {
     //% block=P0
-    P0 = AnalogPin.P0,
+    P0 = 7,
     //% block=P1
-    P1 = AnalogPin.P1,
+    P1 = 8,
     //% block=P2
-    P2 = AnalogPin.P2,
+    P2 = 9,
     //% block=P3
-    P3 = AnalogPin.P3,
+    P3 = 10,
     //% block=P10
-    P10 = AnalogPin.P10
+    P10 = 17
 }
 
 enum GroveJoystickKey {
@@ -142,9 +142,7 @@ namespace grove {
      * @param handler code to run
      */
     //% blockId=grove_joystick_create_event block="on Key|%key| at x pin|%xpin| and y pin|%ypin|"
-    //% xpin.min=0 xpin.max=4
-    //% ypin.min=0 ypin.max=4
-    export function onJoystick(key: GroveJoystickKey, xpin: AnalogPin, ypin: AnalogPin, handler: () => void) {
+    export function onJoystick(key: GroveJoystickKey, xpin: GroveJoystickPins, ypin: GroveJoystickPins, handler: () => void) {
         control.onEvent(joystickEventID, key, handler);
         control.inBackground(() => {
             while(true) {
@@ -220,7 +218,6 @@ namespace grove {
      * @param dataPin value of data pin number
      */
     //% blockId=grove_tm1637_create block="4-Digit Display at|%clkPin|and|%dataPin"
-    //% advanced=true
     export function createDisplay(clkPin: DigitalPin, dataPin: DigitalPin): TM1637
     {
         let display = new TM1637();
@@ -541,35 +538,34 @@ namespace grove {
          * @param xPin
          * @param yPin
          */
-        //% blockId=grove_joystick_read block="read key of joystickon at x pin|%xPin|and y pin|%yPin"
+        //% blockId=grove_joystick_read block="Read key of joystickon at|%xPin|and|%yPin"
         //% advanced=true
-        read(xPin: AnalogPin, yPin: AnalogPin): number {
+        read(xPin: GroveJoystickPins, yPin: GroveJoystickPins): GroveJoystickKey {
             let xdata = 0, ydata = 0, result = 0;
-            if (xPin && yPin) {
-                xdata = pins.analogReadPin(xPin);
-                ydata = pins.analogReadPin(yPin);
-                if (xdata > 1000) {
-                    result = GroveJoystickKey.Press;
-                }
-                else if (xdata > 600) {
-                    if (ydata > 600) result = GroveJoystickKey.UR;
-                    else if (ydata < 400) result = GroveJoystickKey.LR;
-                    else result = GroveJoystickKey.Right;
-                }
-                else if (xdata < 400) {
-                    if (ydata > 600) result = GroveJoystickKey.UL;
-                    else if (ydata < 400) result = GroveJoystickKey.LL;
-                    else result = GroveJoystickKey.Left;
-                }
-                else {
-                    if (ydata > 600) result = GroveJoystickKey.Up;
-                    else if (ydata < 400) result = GroveJoystickKey.Down;
-                    else result = GroveJoystickKey.None;
-                }
+            let x :number = xPin;
+            let y :number = yPin;
+
+            xdata = pins.analogReadPin(<AnalogPin>x);
+            ydata = pins.analogReadPin(<AnalogPin>y);
+            if (xdata > 1000) {
+                result = GroveJoystickKey.Press;
+            }
+            else if (xdata > 600) {
+                if (ydata > 600) result = GroveJoystickKey.UR;
+                else if (ydata < 400) result = GroveJoystickKey.LR;
+                else result = GroveJoystickKey.Right;
+            }
+            else if (xdata < 400) {
+                if (ydata > 600) result = GroveJoystickKey.UL;
+                else if (ydata < 400) result = GroveJoystickKey.LL;
+                else result = GroveJoystickKey.Left;
             }
             else {
-                result =  GroveJoystickKey.None;
+                if (ydata > 600) result = GroveJoystickKey.Up;
+                else if (ydata < 400) result = GroveJoystickKey.Down;
+                else result = GroveJoystickKey.None;
             }
+            
             return result;
         }
     }
