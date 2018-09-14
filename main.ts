@@ -129,8 +129,8 @@ namespace grove {
      * @param handler code to run
      */
     //% blockId=grove_joystick_create_event block="on Key|%key| at x pin|%xpin| and y pin|%ypin|"
-    //% xpin.min=AnalogPin.P0 xpin.max=AnalogPin.P4
-    //% ypin.min=AnalogPin.P0 ypin.max=AnalogPin.P4
+    //% xpin.min=P0 xpin.max=P4
+    //% ypin.min=P0 ypin.max=P4
     export function onJoystick(key: GroveJoystickKey, xpin: AnalogPin, ypin: AnalogPin, handler: () => void) {
         control.onEvent(joystickEventID, key, handler);
         control.inBackground(() => {
@@ -527,7 +527,7 @@ namespace grove {
          * @param xPin
          * @param yPin
          */
-        //% blockId=grove_joystick_read block="read key of joystickon at x pin |%xPin| and y pin |%yPin|"
+        //% blockId=grove_joystick_read block="read key of joystickon at x pin |%xPin and y pin |%yPin"
         //% advanced=true
         read(xPin: AnalogPin, yPin: AnalogPin): number {
             let xdata = 0, ydata = 0, result = 0;
