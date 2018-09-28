@@ -93,7 +93,12 @@
     // display.set(7);
     // let p : grove.PAJ7620;
     // p.init();
-    
+    basic.showNumber(0);
+    let oled: grove.SH1107G;
+    oled.init();
+    oled.putNumber(12345);
+    oled.putString("ABCD");
+
     while(true)
     {
     //     display.show(data ++);
