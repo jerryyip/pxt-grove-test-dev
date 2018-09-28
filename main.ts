@@ -677,8 +677,7 @@ namespace grove {
 
         private sendData(data:number) {
             let buf: Buffer = pins.createBuffer(2);
-
-            buf[0] = 0x80;  // SeeedGrayOLED_Command_Mode
+            buf[0] = 0x40; // SeeedGrayOLED_Data_Mode
             buf[1] = data;
 
             pins.i2cWriteBuffer(0x3c, buf, false);
@@ -688,8 +687,7 @@ namespace grove {
         private sendCommand(cmd:number) {
             
             let buf: Buffer = pins.createBuffer(2);
-
-            buf[0] = 0x40; // SeeedGrayOLED_Data_Mode
+            buf[0] = 0x80;  // SeeedGrayOLED_Command_Mode
             buf[1] = cmd;
 
             pins.i2cWriteBuffer(0x3c, buf, false);
