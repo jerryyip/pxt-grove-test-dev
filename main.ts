@@ -681,8 +681,8 @@ namespace grove {
             buf[0] = 0x80;  // SeeedGrayOLED_Command_Mode
             buf[1] = data;
 
-            // pins.i2cWriteBuffer(0x3c, buf, false);
-            pins.i2cWriteBuffer(0x3c, buf);
+            pins.i2cWriteBuffer(0x3c, buf, false);
+            // pins.i2cWriteBuffer(0x3c, buf);
         }
 
         private sendCommand(cmd:number) {
@@ -692,8 +692,8 @@ namespace grove {
             buf[0] = 0x40; // SeeedGrayOLED_Data_Mode
             buf[1] = cmd;
 
-            // pins.i2cWriteBuffer(0x3c, buf, false);
-            pins.i2cWriteBuffer(0x3c, buf);
+            pins.i2cWriteBuffer(0x3c, buf, false);
+            // pins.i2cWriteBuffer(0x3c, buf);
         }
 
         init() {
