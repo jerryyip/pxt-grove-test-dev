@@ -793,23 +793,21 @@ namespace grove {
         //% blockId=sh1107g_drawBitmap block="draw bitmap start at |%x| |%y|, size |%length| x |%width|, bitmap:|%bitmap|"
         //% x.min=0 x.max=15
         //% y.min=0 y.max=127
-        //% length.min=0 length.max=127
-        //% width.min=0 width.max=15
-        drawBitmap(x:number,y:number,length:number,width:number,bitmap:number[]) {
-            let x_end = x+length, x_start = x;
-            let y_end = y+width, y_start = y;
+        //% row_number.min=0 row_number.max=15
+        //% column_number.min=0 column_number.max=127
+        drawBitmap(x_start:number,y_start:number,row_number:number,column_number:number,bitmap:number[]) {
+            let x_end = x_start+row_number;
+            let y_end = y_start+column_number;
             if (x_end > 15) x_end = 15;
             if (y_end > 127) y_end = 127;
 
-            // this.setHorizontalMode();
+            for (let i=x_start; i<x_end; i++) {
+                for (let j=y_start; j<y_end; j++) {
+                    let temp_byte = bitmap[column_number*i+j];
 
-            for (let i=y_start; i<y_end; i++) {
-                for (let j=x_start; j<x_end; j++) {
-                    let temp_byte = bitmap[width*i+j];
-
-                    this.sendCommand(0xb0+j);
-                    this.sendCommand(i % 16);
-                    this.sendCommand(i/16 + 0x10);
+                    this.sendCommand(0xb0+i);
+                    this.sendCommand(j % 16);
+                    this.sendCommand(j/16 + 0x10);
                     this.sendData(temp_byte);
                 }
             }
