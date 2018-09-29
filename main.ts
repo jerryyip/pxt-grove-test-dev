@@ -801,9 +801,11 @@ namespace grove {
             if (x_end > 15) x_end = 15;
             if (y_end > 127) y_end = 127;
 
+            this.setHorizontalMode();
+
             for (let i=y_start; i<y_end; i++) {
                 for (let j=x_start; j<x_end; j++) {
-                    let temp_byte = bitmap[length*i+j];
+                    let temp_byte = bitmap[width*i+j];
 
                     this.sendCommand(0xb0+j);
                     this.sendCommand(i % 16);
