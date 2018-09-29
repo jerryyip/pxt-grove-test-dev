@@ -717,17 +717,17 @@ namespace grove {
             this.sendCommand(0x11);
         }
 
-        private setContrastLevel(level:number) {
+        setContrastLevel(level:number) {
             this.sendCommand(0x81);   // SeeedGrayOLED_Set_ContrastLevel_Cmd
             this.sendCommand(level);
         }
 
-        private setHorizontalMode() {
+        setHorizontalMode() {
             this.sendCommand(0xa0);
             this.sendCommand(0xc8);
         }
 
-        private setVerticalMode() {
+        setVerticalMode() {
             this.sendCommand(0xa0);
             this.sendCommand(0xc0);
         }
@@ -801,7 +801,7 @@ namespace grove {
             if (x_end > 15) x_end = 15;
             if (y_end > 127) y_end = 127;
 
-            this.setHorizontalMode();
+            // this.setHorizontalMode();
 
             for (let i=y_start; i<y_end; i++) {
                 for (let j=x_start; j<x_end; j++) {
