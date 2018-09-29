@@ -758,11 +758,6 @@ namespace grove {
             }
         }
 
-        // // TODO
-        // setGrayLevel(level:number) {
-        //     this.gray = level;
-        // }
-
         // 
         private putChar(c:number) {
             if (c < 32 || c > 127) {
@@ -795,6 +790,29 @@ namespace grove {
         // setNormalDisplay
         // setInverseDisplay
 
+        //% blockId=sh1107g_drawBitmap block="draw bitmap start at |%x| |%y|, size |%length| x |%width|, bitmap:|%bitmap|"
+        //% x.min=0 x.max=15
+        //% y.min=0 y.max=127
+        //% length.min=0 length.max=127
+        //% width.min=0 width.max=15
+        drawBitmap(x:number,y:number,length:number,width:number,bitmap:number[]) {
+            let x_end = x+length, x_start = x;
+            let y_end = y+width, y_start = y;
+            if (x_end > 15) x_end = 15;
+            if (y_end > 127) y_end = 127;
+
+            for (let i=y_start; i<y_end; i++) {
+                for (let j=x_start; j<x_end; j++) {
+                    let temp_byte = bitmap[length*i+j];
+
+                    this.sendCommand(0xb0+j);
+                    this.sendCommand(i % 16);
+                    this.sendCommand(i/16 + 0x10);
+                    this.sendData(temp_byte);
+                }
+            }
+            
+        }
     }
 
     // export class GroveHicell {
