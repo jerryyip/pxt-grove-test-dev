@@ -798,18 +798,21 @@ namespace grove {
         drawBitmap(x_start:number,y_start:number,row_number:number,column_number:number,bitmap:number[]) {
             let x_end = x_start+row_number;
             let y_end = y_start+column_number;
-            if (x_end > 15) x_end = 15;
-            if (y_end > 127) y_end = 127;
+            if (x_end > 16) x_end = 16;
+            if (y_end > 128) y_end = 128;
+            let x_offset = 0, y_offset = 0;
 
             for (let i=x_start; i<x_end; i++) {
+                y_offset = 0;
                 for (let j=y_start; j<y_end; j++) {
-                    let temp_byte = bitmap[column_number*i+j];
-
+                    let temp_byte = bitmap[column_number*x_offset+y_offset];
+                    y_offset++;
                     this.sendCommand(0xb0+i);
                     this.sendCommand(j % 16);
                     this.sendCommand(j/16 + 0x10);
                     this.sendData(temp_byte);
                 }
+                x_offset ++ ;
             }
             
         }
